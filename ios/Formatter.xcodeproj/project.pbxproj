@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E555C0D2413F4C50049A1A2 /* Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* Formatter.m */; };
+		9261D5102939C5B8005324ED /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9261D50F2939C5B8005324ED /* Formatter.mm */; };
+		9261D5152939C5E9005324ED /* DateFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9261D5142939C5E9005324ED /* DateFormatter.mm */; };
+		9261D5182939C5F7005324ED /* CurrencyFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9261D5172939C5F7005324ED /* CurrencyFormatter.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,8 +26,14 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libFormatter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFormatter.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9261D50F2939C5B8005324ED /* Formatter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Formatter.mm; sourceTree = "<group>"; };
+		9261D5112939C5C1005324ED /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		9261D5122939C5C1005324ED /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
+		9261D5132939C5E9005324ED /* DateFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateFormatter.h; sourceTree = "<group>"; };
+		9261D5142939C5E9005324ED /* DateFormatter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DateFormatter.mm; sourceTree = "<group>"; };
+		9261D5162939C5F7005324ED /* CurrencyFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurrencyFormatter.h; sourceTree = "<group>"; };
+		9261D5172939C5F7005324ED /* CurrencyFormatter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CurrencyFormatter.mm; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Formatter.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* Formatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Formatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,8 +58,14 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				9261D5162939C5F7005324ED /* CurrencyFormatter.h */,
+				9261D5172939C5F7005324ED /* CurrencyFormatter.mm */,
+				9261D5132939C5E9005324ED /* DateFormatter.h */,
+				9261D5142939C5E9005324ED /* DateFormatter.mm */,
 				B3E7B5881CC2AC0600A0062D /* Formatter.h */,
-				B3E7B5891CC2AC0600A0062D /* Formatter.m */,
+				9261D50F2939C5B8005324ED /* Formatter.mm */,
+				9261D5112939C5C1005324ED /* json.h */,
+				9261D5122939C5C1005324ED /* Macros.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,7 +127,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3E7B58A1CC2AC0600A0062D /* Formatter.m in Sources */,
+				9261D5152939C5E9005324ED /* DateFormatter.mm in Sources */,
+				9261D5182939C5F7005324ED /* CurrencyFormatter.mm in Sources */,
+				9261D5102939C5B8005324ED /* Formatter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

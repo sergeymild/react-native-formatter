@@ -6,7 +6,7 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const DateFormatter = NativeModules.Formatter
+const Formatter = NativeModules.Formatter
   ? NativeModules.Formatter
   : new Proxy(
     {},
@@ -17,7 +17,7 @@ const DateFormatter = NativeModules.Formatter
     }
   );
 
-DateFormatter.install();
+Formatter.install();
 
 export interface Locale {
   // language code of locale

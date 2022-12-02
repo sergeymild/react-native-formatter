@@ -11,9 +11,11 @@ import com.facebook.react.module.annotations.ReactModule;
 @ReactModule(name = FormatterModule.NAME)
 public class FormatterModule extends ReactContextBaseJavaModule {
     public static final String NAME = "Formatter";
+  private Formatter formatter;
 
     public FormatterModule(ReactApplicationContext reactContext) {
         super(reactContext);
+      formatter = new Formatter(reactContext);
     }
 
     @Override
@@ -23,11 +25,9 @@ public class FormatterModule extends ReactContextBaseJavaModule {
     }
 
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    public void multiply(double a, double b, Promise promise) {
-        promise.resolve(a * b);
-    }
+  @ReactMethod(isBlockingSynchronousMethod = true)
+  public void install() {
+    formatter.install(getReactApplicationContext());
+  }
 
 }

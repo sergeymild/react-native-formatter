@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CurrencyFormatter : NSObject
 @property NSLocale *currentLocale;
 -(void)setLocale:(NSLocale*)locale;
--(NSString*)format:(double)value;
+-(NSString*)format:(double)value hideSymbol:(bool)hideSymbol;
 @end
 
 NS_ASSUME_NONNULL_END

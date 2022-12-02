@@ -12,6 +12,7 @@
 #import "DateFormatter.h"
 #import "CurrencyFormatter.h"
 
+using namespace facebook;
 @interface Formatter()
 {
     DateFormatter* dateFormatter;
@@ -128,8 +129,12 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     
     auto formatCurrency = JSI_HOST_FUNCTION("formatCurrency", 2) {
         auto rawValue = args[0].asNumber();
+        auto rawHideSymbol = false;
+        if (!args[1].isNull() && !args[1].isUndefined() && args[1].isBool()) {
+            rawHideSymbol = args[1].getBool();
+        }
         
-        auto formatted = [currencyFormatter format:rawValue];
+        auto formatted = [currencyFormatter format:rawValue hideSymbol:rawHideSymbol];
         return [self toJSIString:formatted];
     });
     

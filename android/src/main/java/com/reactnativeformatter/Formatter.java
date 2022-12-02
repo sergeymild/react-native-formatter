@@ -1,6 +1,8 @@
 package com.reactnativeformatter;
 
 import android.content.Context;
+import android.icu.text.DecimalFormat;
+import android.icu.text.DecimalFormatSymbols;
 import android.icu.text.NumberFormat;
 import android.icu.util.Currency;
 import android.text.format.DateUtils;
@@ -47,6 +49,7 @@ public class Formatter {
   private Locale[] availableLocales;
   private Map<String, Locale> availableLocalesMap;
   private NumberFormat currencyFormatter;
+  private String currencySymbol;
 
   boolean install(ReactApplicationContext context) {
     System.loadLibrary("react-native-formatter");
@@ -62,6 +65,7 @@ public class Formatter {
   private void setCurrencyFormatter() {
     currencyFormatter = NumberFormat.getCurrencyInstance();
     currencyFormatter.setCurrency(Currency.getInstance(currentLocale));
+    currencySymbol = currencyFormatter.getCurrency().getSymbol();
   }
 
   private boolean isDateInCurrentWeek(Date date) {
@@ -195,7 +199,10 @@ public class Formatter {
 
 
   @DoNotStrip
-  public String formatCurrency(double value) {
+  public String formatCurrency(double value, boolean hideSymbol) {
+    DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormatter).getDecimalFormatSymbols();
+    decimalFormatSymbols.setCurrencySymbol(hideSymbol ? "" : currencySymbol);
+    ((DecimalFormat)currencyFormatter).setDecimalFormatSymbols(decimalFormatSymbols);
     return currencyFormatter.format(value);
   }
 }

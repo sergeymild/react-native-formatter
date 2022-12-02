@@ -3,7 +3,7 @@ Format date on Native Side
 ## Installation
 
 ```sh
-"react-native-formatter": "sergeymild/react-native-formatter#0.11.0"
+"react-native-formatter": "sergeymild/react-native-formatter#0.13.0"
 ```
 
 ## Usage
@@ -49,7 +49,7 @@ formatter.locale.allAvailable(): Locale[];
 
 // format value to current locale currency
 // for example 12934.4348943 will be formatted to $12,934.43
-formatter.currency.format(12934.4348943)
+formatter.currency.format(12934.4348943, hideSymbol?: boolean)
 ```
 
 

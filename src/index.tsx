@@ -40,7 +40,7 @@ declare global {
     setLocale(locale: string): boolean;
     getLocale(): Locale;
     availableLocales(): Locale[];
-    formatCurrency(value: number, hideSymbol?: boolean): string;
+    formatCurrency(value: number, symbol?: string): string;
   };
 }
 
@@ -101,8 +101,8 @@ export const formatter = {
   },
 
   currency: {
-    format(value: number, hideSymbol?: boolean): string {
-      return __formatter.formatCurrency(value, hideSymbol)
+    format(value: number, symbol?: string): string {
+      return __formatter.formatCurrency(value, symbol)
     }
   }
 }

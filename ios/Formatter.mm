@@ -129,12 +129,13 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     
     auto formatCurrency = JSI_HOST_FUNCTION("formatCurrency", 2) {
         auto rawValue = args[0].asNumber();
-        auto rawHideSymbol = false;
-        if (!args[1].isNull() && !args[1].isUndefined() && args[1].isBool()) {
-            rawHideSymbol = args[1].getBool();
+        auto rawSymbol = @"current";
+        if (!args[1].isNull() && !args[1].isUndefined() && args[1].isString()) {
+            auto c = args[1].asString(runtime).utf8(runtime);
+            rawSymbol = [[NSString alloc] initWithCString:c.c_str() encoding:NSUTF8StringEncoding];
         }
         
-        auto formatted = [currencyFormatter format:rawValue hideSymbol:rawHideSymbol];
+        auto formatted = [currencyFormatter format:rawValue symbol:rawSymbol];
         return [self toJSIString:formatted];
     });
     

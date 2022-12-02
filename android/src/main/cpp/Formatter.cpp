@@ -80,12 +80,13 @@ void Formatter::installJSIBindings() {
 
     auto formatCurrency = JSI_HOST_FUNCTION("formatCurrency", 1) {
        auto rawValue = args[0].asNumber();
-        auto rawHideSymbol = false;
-        if (!args[1].isNull() && !args[1].isUndefined() && args[1].isBool()) {
-         rawHideSymbol = args[1].getBool();
-        }
-       auto method = javaPart_->getClass()->getMethod<JString(double, bool)>("formatCurrency");
-       auto response = method(javaPart_.get(), rawValue, rawHideSymbol);
+         std::string rawSymbol = "current";
+         if (!args[1].isNull() && !args[1].isUndefined() && args[1].isString()) {
+             rawSymbol = args[1].asString(runtime).utf8(runtime);
+         }
+     auto symbol = jni::make_jstring(rawSymbol);
+       auto method = javaPart_->getClass()->getMethod<JString(double, jni::local_ref<JString>)>("formatCurrency");
+       auto response = method(javaPart_.get(), rawValue, symbol);
        return jsi::String::createFromUtf8(runtime, response->toStdString());
     });
 

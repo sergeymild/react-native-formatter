@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -199,9 +200,9 @@ public class Formatter {
 
 
   @DoNotStrip
-  public String formatCurrency(double value, boolean hideSymbol) {
+  public String formatCurrency(double value, String symbol) {
     DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormatter).getDecimalFormatSymbols();
-    decimalFormatSymbols.setCurrencySymbol(hideSymbol ? "" : currencySymbol);
+    decimalFormatSymbols.setCurrencySymbol(Objects.equals(symbol, "current") ? currencySymbol : symbol);
     ((DecimalFormat)currencyFormatter).setDecimalFormatSymbols(decimalFormatSymbols);
     return currencyFormatter.format(value);
   }

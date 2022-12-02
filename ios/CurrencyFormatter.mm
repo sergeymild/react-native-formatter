@@ -11,7 +11,7 @@
 @interface CurrencyFormatter()
 {
     NSNumberFormatter* formatter;
-    NSString* symbol;
+    NSString* currencySymbol;
 }
 
 @end
@@ -32,7 +32,7 @@
     [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     [formatter setRoundingMode:NSNumberFormatterRoundDown];
     [formatter setLocale:_currentLocale];
-    symbol = [formatter currencySymbol];
+    currencySymbol = [formatter currencySymbol];
 }
 
 -(void)setLocale:(NSLocale*)locale {
@@ -40,8 +40,8 @@
     [self initFormatter];
 }
 
--(NSString*)format:(double)value hideSymbol:(bool)hideSymbol {
-    [formatter setCurrencySymbol:hideSymbol ? @"" : symbol];
+-(NSString*)format:(double)value symbol:(NSString*)symbol {
+    [formatter setCurrencySymbol:[symbol isEqualToString:@"current"] ? currencySymbol : symbol];
     return [formatter stringFromNumber:[[NSNumber alloc] initWithDouble:value]];
 }
 @end

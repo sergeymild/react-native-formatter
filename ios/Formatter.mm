@@ -12,6 +12,7 @@
 #import "DateFormatter.h"
 #import "CurrencyFormatter.h"
 
+using namespace facebook;
 @interface Formatter()
 {
     DateFormatter* dateFormatter;

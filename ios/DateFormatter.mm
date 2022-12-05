@@ -105,6 +105,11 @@ int is24Hours_ = -1;
     return [formatter stringFromDate:date];
 }
 
+-(NSString*)simpleFormat:(double)rawDate {
+    auto date = [[NSDate alloc] initWithTimeIntervalSince1970:rawDate];
+    return [[self shortDateFormatter] stringFromDate:date];
+}
+
 -(NSString*)timeAgo:(double)rawDate style:(NSString*)style {
     auto date = [[NSDate alloc] initWithTimeIntervalSince1970:rawDate];
     

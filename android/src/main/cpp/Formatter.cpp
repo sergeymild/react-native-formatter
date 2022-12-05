@@ -61,6 +61,13 @@ void Formatter::installJSIBindings() {
         return jsi::String::createFromUtf8(runtime, response->toStdString());
     });
 
+    auto simpleFormat = JSI_HOST_FUNCTION("simpleFormat", 1) {
+        auto rawDate = args[0].asNumber();
+        auto method = javaPart_->getClass()->getMethod<JString(double)>("simpleFormat");
+        auto response = method(javaPart_.get(), rawDate);
+        return jsi::String::createFromUtf8(runtime, response->toStdString());
+    });
+
     auto timeAgo = JSI_HOST_FUNCTION("timeAgo", 2) {
         auto rawDate = args[0].asNumber();
         auto style = args[1].asString(runtime).utf8(runtime);
@@ -116,6 +123,7 @@ void Formatter::installJSIBindings() {
     exportModule.setProperty(*_runtime, "chatLikeFormat", std::move(chatLikeFormat));
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
     exportModule.setProperty(*_runtime, "format", std::move(format));
+    exportModule.setProperty(*_runtime, "simpleFormat", std::move(simpleFormat));
     exportModule.setProperty(*_runtime, "timeAgo", std::move(timeAgo));
     exportModule.setProperty(*_runtime, "fromNow", std::move(fromNow));
     exportModule.setProperty(*_runtime, "setLocale", std::move(setLocale));

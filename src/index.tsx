@@ -35,6 +35,7 @@ declare global {
     chatLikeFormat(date: number): string;
     hoursMinutes(date: number): string;
     format(date: number, format: string): string;
+    simpleFormat(date: number): string;
     timeAgo(date: number, style: 'full' | 'spellOut'): string;
     fromNow(date: number): string;
     setLocale(locale: string): boolean;
@@ -79,6 +80,10 @@ export const formatter = {
 
     fromNow(date: number | string): string {
       return __formatter.timeAgo(toMills(date), 'full');
+    },
+
+    simpleFormat(date: number | string): string {
+      return __formatter.simpleFormat(toMills(date));
     },
 
     toISO8601format(date: number): string {

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString*)hoursMinutes:(double)rawDate;
 -(NSString*)format:(double)rawDate pattern:(NSString*)pattern;
 -(NSString*)timeAgo:(double)rawDate style:(NSString*)style;
+-(NSString*)simpleFormat:(double)rawDate;
 -(void)setLocale:(NSLocale*)locale;
 @end
 

@@ -9,6 +9,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>currency: {formatter.currency.format(12934.4348943)}</Text>
+      <Text>simple: {formatter.date.simpleFormat(Date.now())}</Text>
     </View>
   );
 }

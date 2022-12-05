@@ -141,6 +141,12 @@ public class Formatter {
   }
 
   @DoNotStrip
+  public String simpleFormat(double rawDate) {
+    Date date = new Date((long) rawDate);
+    return SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, currentLocale).format(date);
+  }
+
+  @DoNotStrip
   public String timeAgo(double rawDate, String style) {
     Date date = new Date((long) rawDate);
     PrettyTime prettyTime = new PrettyTime(currentLocale);

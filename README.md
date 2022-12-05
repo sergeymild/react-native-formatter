@@ -35,6 +35,8 @@ formatter.date.hoursMinutes(Date.now())
 // just format date with passed pattern
 // accepts date in mills or string `YYYY-MM-DDTHH:mm:ss.sssZ` format
 formatter.date.format(Date.now(), 'dd MMM yyyy HH:mm')
+//Short will return "12/13/52"
+formatter.date.simpleFormat(Date.now())
 // formatting of a relative date or time, such as "in 2 weeks", "in 3 months"
 // accepts date in mills or string `YYYY-MM-DDTHH:mm:ss.sssZ` format
 formatter.date.fromNow(futureTime)

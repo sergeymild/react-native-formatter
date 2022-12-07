@@ -53,7 +53,7 @@ function toMills(date: number | string): number {
   return new Date(date).getTime();
 }
 
-const ISO_REG = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2,3}(.\d{3})?Z/;
+const ISO_REG = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2,3}(.\d{3,6})?Z/;
 function isIsoDate(date: string) {
   return ISO_REG.test(date);
 }

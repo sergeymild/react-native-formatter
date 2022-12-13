@@ -14,7 +14,8 @@ int is24Hours_ = -1;
 
 -(id)init {
     if ( self = [super init] ) {
-        _currentLocale = [NSLocale currentLocale];
+        NSString *identifier = [[[NSLocale preferredLanguages] firstObject] stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+        _currentLocale = [[NSLocale alloc] initWithLocaleIdentifier:identifier];
     }
     return self;
 }

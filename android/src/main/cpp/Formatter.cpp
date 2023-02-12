@@ -120,6 +120,12 @@ void Formatter::installJSIBindings() {
         return jsi::Value::createFromJsonUtf8(runtime, reinterpret_cast<const uint8_t *>(str.c_str()), str.size());
     });
 
+    auto is24HourClock = JSI_HOST_FUNCTION("is24HourClock", 0) {
+       auto method = javaPart_->getClass()->getMethod<jboolean()>("is24HourClock");
+       auto response = method(javaPart_.get());
+       return {response == 1};
+    });
+
     exportModule.setProperty(*_runtime, "chatLikeFormat", std::move(chatLikeFormat));
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
     exportModule.setProperty(*_runtime, "format", std::move(format));
@@ -130,6 +136,7 @@ void Formatter::installJSIBindings() {
     exportModule.setProperty(*_runtime, "getLocale", std::move(getLocale));
     exportModule.setProperty(*_runtime, "availableLocales", std::move(availableLocales));
     exportModule.setProperty(*_runtime, "formatCurrency", std::move(formatCurrency));
+    exportModule.setProperty(*_runtime, "is24HourClock", std::move(is24HourClock));
     _runtime->global().setProperty(*_runtime, "__formatter", exportModule);
 }
 

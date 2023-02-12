@@ -161,6 +161,11 @@ public class Formatter {
   }
 
   @DoNotStrip
+  public boolean is24HourClock() {
+    return is24hoursFormat;
+  }
+
+  @DoNotStrip
   public String availableLocales() {
     fillAvailableLocales();
     JSONArray array = new JSONArray();

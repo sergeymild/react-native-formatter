@@ -119,6 +119,10 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         return [self toJSIString:formatted];
     });
     
+    auto is24HourClock = JSI_HOST_FUNCTION("is24HourClock", 0) {
+        return jsi::Value([dateFormatter is24HourClock]);
+    });
+    
     auto simpleFormat = JSI_HOST_FUNCTION("simpleFormat", 1) {
         auto rawDate = args[0].asNumber() / 1000.0;
         auto formatted = [dateFormatter simpleFormat:rawDate];
@@ -156,6 +160,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     exportModule.setProperty(*_runtime, "getLocale", std::move(getLocale));
     exportModule.setProperty(*_runtime, "availableLocales", std::move(availableLocales));
     exportModule.setProperty(*_runtime, "formatCurrency", std::move(formatCurrency));
+    exportModule.setProperty(*_runtime, "is24HourClock", std::move(is24HourClock));
     _runtime->global().setProperty(*_runtime, "__formatter", exportModule);
 }
 

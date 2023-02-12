@@ -21,7 +21,6 @@ int is24Hours_ = -1;
 }
 
 -(NSDateFormatter*)getFormatter:(NSString*)pattern {
-    NSLog(@"🥸 getFormatter %@ %@", pattern, _currentLocale.countryCode);
     auto formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:_currentLocale];
     [formatter setDateFormat:pattern];
@@ -29,7 +28,6 @@ int is24Hours_ = -1;
 }
 
 -(NSDateFormatter*) shortTimeFormatter {
-    NSLog(@"🥸 shortTimeFormatter %@", _currentLocale.countryCode);
     auto formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:_currentLocale];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
@@ -37,7 +35,6 @@ int is24Hours_ = -1;
 }
 
 -(NSDateFormatter*) shortDateFormatter {
-    NSLog(@"🥸 shortDateFormatter %@", _currentLocale.countryCode);
     auto formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:_currentLocale];
     [formatter setDateStyle:NSDateFormatterShortStyle];
@@ -50,7 +47,7 @@ int is24Hours_ = -1;
 
 
  
-- (bool)uses24HourClockForLocale {
+- (bool)is24HourClock {
     if (is24Hours_ != -1) return is24Hours_ == 1;
     NSDateFormatter* formatter = [NSDateFormatter new];
     

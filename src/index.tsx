@@ -36,6 +36,7 @@ declare global {
     hoursMinutes(date: number): string;
     format(date: number, format: string): string;
     simpleFormat(date: number): string;
+    is24HourClock(): boolean;
     timeAgo(date: number, style: 'full' | 'spellOut'): string;
     fromNow(date: number): string;
     setLocale(locale: string): boolean;
@@ -84,6 +85,19 @@ export const formatter = {
 
     simpleFormat(date: number | string): string {
       return __formatter.simpleFormat(toMills(date));
+    },
+
+    isSameDay(left: number | string, right: number | string): boolean {
+      left = toMills(left);
+      right = toMills(right);
+      return (
+        __formatter.date.format(left, 'MM.dd.yyyy') ===
+        __formatter.date.format(right, 'MM.dd.yyyy')
+      );
+    },
+
+    get is24HourClock(): boolean {
+      return __formatter.is24HourClock();
     },
 
     toISO8601format(date: number): string {

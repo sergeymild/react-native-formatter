@@ -91,8 +91,8 @@ export const formatter = {
       left = toMills(left);
       right = toMills(right);
       return (
-        __formatter.date.format(left, 'MM.dd.yyyy') ===
-        __formatter.date.format(right, 'MM.dd.yyyy')
+        __formatter.format(left, 'MM.dd.yyyy') ===
+        __formatter.format(right, 'MM.dd.yyyy')
       );
     },
 

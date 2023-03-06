@@ -50,6 +50,7 @@ public class Formatter {
   private Locale[] availableLocales;
   private Map<String, Locale> availableLocalesMap;
   private NumberFormat currencyFormatter;
+  private NumberFormat numberFormatter;
   private String currencySymbol;
 
   boolean install(ReactApplicationContext context) {
@@ -67,6 +68,8 @@ public class Formatter {
     currencyFormatter = NumberFormat.getCurrencyInstance();
     currencyFormatter.setCurrency(Currency.getInstance(currentLocale));
     currencySymbol = currencyFormatter.getCurrency().getSymbol();
+
+    numberFormatter = NumberFormat.getNumberInstance();
   }
 
   private boolean isDateInCurrentWeek(Date date) {
@@ -216,5 +219,10 @@ public class Formatter {
     decimalFormatSymbols.setCurrencySymbol(Objects.equals(symbol, "current") ? currencySymbol : symbol);
     ((DecimalFormat)currencyFormatter).setDecimalFormatSymbols(decimalFormatSymbols);
     return currencyFormatter.format(value);
+  }
+
+  @DoNotStrip
+  public String formatCurrency(double value, boolean isFloat) {
+    return numberFormatter.format(value);
   }
 }

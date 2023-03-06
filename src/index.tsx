@@ -43,6 +43,7 @@ declare global {
     getLocale(): Locale;
     availableLocales(): Locale[];
     formatCurrency(value: number, symbol?: string): string;
+    localizeNumbers(value: number, isFloat: boolean): string;
   };
 }
 
@@ -117,6 +118,12 @@ export const formatter = {
     allAvailable(): Locale[] {
       return __formatter.availableLocales();
     },
+  },
+
+  numbers: {
+    format(value: number, isFloat?: boolean): string {
+      return __formatter.localizeNumbers(value, isFloat ?? false)
+    }
   },
 
   currency: {

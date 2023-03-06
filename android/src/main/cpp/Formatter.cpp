@@ -97,6 +97,15 @@ void Formatter::installJSIBindings() {
        return jsi::String::createFromUtf8(runtime, response->toStdString());
     });
 
+    auto localizeNumbers = JSI_HOST_FUNCTION("formatCurrency", 2) {
+        auto rawValue = args[0].asNumber();
+        auto rawIsFloat = args[1].getBool();
+
+         auto method = javaPart_->getClass()->getMethod<JString(double, bool)>("formatCurrency");
+         auto response = method(javaPart_.get(), rawValue, rawIsFloat);
+         return jsi::String::createFromUtf8(runtime, response->toStdString());
+    });
+
     auto setLocale = JSI_HOST_FUNCTION("setLocale", 1) {
         auto rawLocale = args[0].asString(runtime).utf8(runtime);
         auto locale = jni::make_jstring(rawLocale);
@@ -136,6 +145,7 @@ void Formatter::installJSIBindings() {
     exportModule.setProperty(*_runtime, "getLocale", std::move(getLocale));
     exportModule.setProperty(*_runtime, "availableLocales", std::move(availableLocales));
     exportModule.setProperty(*_runtime, "formatCurrency", std::move(formatCurrency));
+    exportModule.setProperty(*_runtime, "localizeNumbers", std::move(localizeNumbers));
     exportModule.setProperty(*_runtime, "is24HourClock", std::move(is24HourClock));
     _runtime->global().setProperty(*_runtime, "__formatter", exportModule);
 }

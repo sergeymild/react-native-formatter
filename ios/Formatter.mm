@@ -3,7 +3,6 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTBridge.h>
 #import "Macros.h"
-#import "json.h"
 
 #import <React/RCTBlobManager.h>
 #import <React/RCTUIManager.h>
@@ -58,7 +57,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         auto formatted = [dateFormatter chatLikeFormat:rawDate];
         return jsi::String::createFromUtf8(runtime, [formatted cStringUsingEncoding:NSUTF8StringEncoding]);
     });
-    
+
     auto setLocale = JSI_HOST_FUNCTION("setLocale", 1) {
         auto rawLocale = args[0].asString(runtime).utf8(runtime);
         auto locale = [[NSString alloc] initWithCString:rawLocale.c_str() encoding:NSUTF8StringEncoding];
@@ -70,7 +69,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         }
         return jsi::Value(false);
     });
-    
+
     auto getLocale = JSI_HOST_FUNCTION("getLocale", 0) {
         auto obj = jsi::Object(runtime);
         auto currentLocale = dateFormatter.currentLocale;
@@ -81,10 +80,10 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         obj.setProperty(runtime, "name", [self toJSIString:[currentLocale localizedStringForLanguageCode: code]]);
         obj.setProperty(runtime, "code", [self toJSIString:[locale languageCode]]);
         obj.setProperty(runtime, "changeCode", [self toJSIString:str]);
-        
+
         return obj;
     });
-    
+
     auto availableLocales = JSI_HOST_FUNCTION("availableLocales", 0) {
         NSArray* languages = [NSLocale availableLocaleIdentifiers];
         auto array = jsi::Array(runtime, [languages count]);
@@ -95,7 +94,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
             auto code = (NSString*)[languages objectAtIndex:i];
             auto locale = [[NSLocale alloc] initWithLocaleIdentifier:code];
             obj.setProperty(runtime, "displayName", [self toJSIString:[locale localizedStringForLanguageCode: code]]);
-            
+
             obj.setProperty(runtime, "name", [self toJSIString:[currentLocale localizedStringForLanguageCode: code]]);
             obj.setProperty(runtime, "code", [self toJSIString:[locale languageCode]]);
             auto str = [[NSString alloc] initWithFormat:@"%@_%@", [locale languageCode], [locale countryCode]];
@@ -104,13 +103,13 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         }
         return array;
     });
-    
+
     auto hoursMinutes = JSI_HOST_FUNCTION("hoursMinutes", 1) {
         auto rawDate = args[0].asNumber() / 1000.0;
         auto formatted = [dateFormatter hoursMinutes:rawDate];
         return [self toJSIString:formatted];
     });
-    
+
     auto format = JSI_HOST_FUNCTION("format", 2) {
         auto rawDate = args[0].asNumber() / 1000.0;
         auto rawFormat = args[1].asString(runtime).utf8(runtime);
@@ -118,17 +117,17 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         auto formatted = [dateFormatter format:rawDate pattern:format];
         return [self toJSIString:formatted];
     });
-    
+
     auto is24HourClock = JSI_HOST_FUNCTION("is24HourClock", 0) {
         return jsi::Value([dateFormatter is24HourClock]);
     });
-    
+
     auto simpleFormat = JSI_HOST_FUNCTION("simpleFormat", 1) {
         auto rawDate = args[0].asNumber() / 1000.0;
         auto formatted = [dateFormatter simpleFormat:rawDate];
         return [self toJSIString:formatted];
     });
-    
+
     auto timeAgo = JSI_HOST_FUNCTION("timeAgo", 2) {
         auto rawDate = args[0].asNumber() / 1000.0;
         auto rawStyle = args[1].asString(runtime).utf8(runtime);
@@ -136,7 +135,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         auto formatted = [dateFormatter timeAgo:rawDate style:style];
         return [self toJSIString:formatted];
     });
-    
+
     auto formatCurrency = JSI_HOST_FUNCTION("formatCurrency", 2) {
         auto rawValue = args[0].asNumber();
         auto rawSymbol = @"current";
@@ -144,11 +143,18 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
             auto c = args[1].asString(runtime).utf8(runtime);
             rawSymbol = [[NSString alloc] initWithCString:c.c_str() encoding:NSUTF8StringEncoding];
         }
-        
+
         auto formatted = [currencyFormatter format:rawValue symbol:rawSymbol];
         return [self toJSIString:formatted];
     });
-    
+
+    auto localizeNumbers = JSI_HOST_FUNCTION("localizeNumbers", 2) {
+        auto rawValue = args[0].asNumber();
+        auto rawIsFloat = args[1].getBool();
+        auto formatted = [currencyFormatter localizeNumbers:rawValue isFloat:rawIsFloat];
+        return [self toJSIString:formatted];
+    });
+
     auto exportModule = jsi::Object(*_runtime);
     exportModule.setProperty(*_runtime, "chatLikeFormat", std::move(chatLikeFormat));
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
@@ -160,6 +166,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     exportModule.setProperty(*_runtime, "getLocale", std::move(getLocale));
     exportModule.setProperty(*_runtime, "availableLocales", std::move(availableLocales));
     exportModule.setProperty(*_runtime, "formatCurrency", std::move(formatCurrency));
+    exportModule.setProperty(*_runtime, "localizeNumbers", std::move(localizeNumbers));
     exportModule.setProperty(*_runtime, "is24HourClock", std::move(is24HourClock));
     _runtime->global().setProperty(*_runtime, "__formatter", exportModule);
 }

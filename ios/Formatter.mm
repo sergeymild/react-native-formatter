@@ -3,7 +3,6 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTBridge.h>
 #import "Macros.h"
-#import "json.h"
 
 #import <React/RCTBlobManager.h>
 #import <React/RCTUIManager.h>
@@ -145,6 +144,13 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         return [self toJSIString:formatted];
     });
     
+    auto localizeNumbers = JSI_HOST_FUNCTION("localizeNumbers", 2) {
+        auto rawValue = args[0].asNumber();
+        auto rawIsFloat = args[1].getBool();
+        auto formatted = [currencyFormatter localizeNumbers:rawValue isFloat:rawIsFloat];
+        return [self toJSIString:formatted];
+    });
+    
     auto exportModule = jsi::Object(*_runtime);
     exportModule.setProperty(*_runtime, "chatLikeFormat", std::move(chatLikeFormat));
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
@@ -156,6 +162,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     exportModule.setProperty(*_runtime, "getLocale", std::move(getLocale));
     exportModule.setProperty(*_runtime, "availableLocales", std::move(availableLocales));
     exportModule.setProperty(*_runtime, "formatCurrency", std::move(formatCurrency));
+    exportModule.setProperty(*_runtime, "localizeNumbers", std::move(localizeNumbers));
     _runtime->global().setProperty(*_runtime, "__formatter", exportModule);
 }
 

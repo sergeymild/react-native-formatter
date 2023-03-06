@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSLocale *currentLocale;
 -(void)setLocale:(NSLocale*)locale;
 -(NSString*)format:(double)value symbol:(NSString*)symbol;
+-(NSString*)localizeNumbers:(double)value isFloat:(bool)isFloat;
 @end
 
 NS_ASSUME_NONNULL_END

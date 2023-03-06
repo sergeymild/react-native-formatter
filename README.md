@@ -3,7 +3,7 @@ Format date on Native Side
 ## Installation
 
 ```sh
-"react-native-formatter": "sergeymild/react-native-formatter#0.71.2"
+"react-native-formatter": "sergeymild/react-native-formatter#0.71.3"
 ```
 
 ## Usage

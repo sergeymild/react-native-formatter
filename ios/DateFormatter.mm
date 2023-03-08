@@ -108,6 +108,14 @@ int is24Hours_ = -1;
     return [[self shortDateFormatter] stringFromDate:date];
 }
 
+-(NSString*)formatElapsedTime:(double)rawDate {
+    auto elapsed = [NSNumber numberWithDouble:rawDate];
+    NSUInteger h = elapsed.intValue / 3600;
+    NSUInteger m = (elapsed.intValue / 60) % 60;
+    NSUInteger s = elapsed.intValue % 60;
+    return [NSString stringWithFormat:@"%lu:%02lu:%02lu", (unsigned long)h, (unsigned long)m, (unsigned long)s];
+}
+
 -(NSString*)timeAgo:(double)rawDate style:(NSString*)style {
     auto date = [[NSDate alloc] initWithTimeIntervalSince1970:rawDate];
     

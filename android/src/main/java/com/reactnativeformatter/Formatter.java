@@ -137,6 +137,12 @@ public class Formatter {
   }
 
   @DoNotStrip
+  public String formatElapsedTime(double rawDate) {
+    return DateUtils.formatElapsedTime((long) rawDate);
+  }
+
+
+  @DoNotStrip
   public String format(double rawDate, String format) {
     Date date = new Date((long) rawDate);
     SimpleDateFormat format1 = new SimpleDateFormat(format, currentLocale);

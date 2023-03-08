@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(bool)is24HourClock;
 -(NSString*)timeAgo:(double)rawDate style:(NSString*)style;
 -(NSString*)simpleFormat:(double)rawDate;
+-(NSString*)formatElapsedTime:(double)rawDate;
 -(void)setLocale:(NSLocale*)locale;
 @end
 

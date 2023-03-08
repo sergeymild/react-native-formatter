@@ -109,6 +109,12 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         auto formatted = [dateFormatter hoursMinutes:rawDate];
         return [self toJSIString:formatted];
     });
+    
+    auto formatElapsedTime = JSI_HOST_FUNCTION("formatElapsedTime", 1) {
+        auto rawDate = args[0].asNumber();
+        auto formatted = [dateFormatter formatElapsedTime:rawDate];
+        return [self toJSIString:formatted];
+    });
 
     auto format = JSI_HOST_FUNCTION("format", 2) {
         auto rawDate = args[0].asNumber() / 1000.0;
@@ -158,6 +164,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     auto exportModule = jsi::Object(*_runtime);
     exportModule.setProperty(*_runtime, "chatLikeFormat", std::move(chatLikeFormat));
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
+    exportModule.setProperty(*_runtime, "formatElapsedTime", std::move(formatElapsedTime));
     exportModule.setProperty(*_runtime, "format", std::move(format));
     exportModule.setProperty(*_runtime, "simpleFormat", std::move(simpleFormat));
     exportModule.setProperty(*_runtime, "timeAgo", std::move(timeAgo));

@@ -1,6 +1,6 @@
 {
   "name": "react-native-formatter",
-  "version": "0.71.3",
+  "version": "0.71.4",
   "description": "React Native JSI date formatter",
   "main": "src/index",
   "module": "src/index",

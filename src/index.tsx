@@ -34,6 +34,7 @@ declare global {
   var __formatter: {
     chatLikeFormat(date: number): string;
     hoursMinutes(date: number): string;
+    formatElapsedTime(date: number): string;
     format(date: number, format: string): string;
     simpleFormat(date: number): string;
     is24HourClock(): boolean;
@@ -68,6 +69,10 @@ export const formatter = {
 
     hoursMinutes(date: number | string): string {
       return __formatter.hoursMinutes(toMills(date));
+    },
+
+    formatElapsedTime(date: number | string): string {
+      return __formatter.formatElapsedTime(toMills(date));
     },
 
     format(date: number | string, format: string): string {

@@ -14,7 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSLocale *currentLocale;
 -(void)setLocale:(NSLocale*)locale;
 -(NSString*)format:(double)value symbol:(NSString*)symbol;
--(NSString*)localizeNumbers:(double)value isFloat:(bool)isFloat;
+-(NSString*)localizeNumbers:(double)value
+                       type:(NSString*)type
+      maximumFractionDigits:(NSUInteger)maximumFractionDigits;
 @end
 
 NS_ASSUME_NONNULL_END

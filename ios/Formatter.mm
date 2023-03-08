@@ -154,10 +154,15 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         return [self toJSIString:formatted];
     });
 
-    auto localizeNumbers = JSI_HOST_FUNCTION("localizeNumbers", 2) {
+    auto localizeNumbers = JSI_HOST_FUNCTION("localizeNumbers", 3) {
         auto rawValue = args[0].asNumber();
-        auto rawIsFloat = args[1].getBool();
-        auto formatted = [currencyFormatter localizeNumbers:rawValue isFloat:rawIsFloat];
+        auto rawType = args[1].asString(runtime).utf8(runtime);
+        auto rawDigits = args[2].asNumber();
+        auto type = [[NSString alloc] initWithUTF8String:rawType.c_str()];
+        
+        auto formatted = [currencyFormatter localizeNumbers:rawValue
+                                                       type:type
+                                      maximumFractionDigits:rawDigits];
         return [self toJSIString:formatted];
     });
 

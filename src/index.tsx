@@ -44,7 +44,7 @@ declare global {
     getLocale(): Locale;
     availableLocales(): Locale[];
     formatCurrency(value: number, symbol?: string): string;
-    localizeNumbers(value: number, isFloat: boolean): string;
+    localizeNumbers(value: number, type: 'decimal' | 'basic', maximumFractionDigits: number): string;
   };
 }
 
@@ -126,8 +126,8 @@ export const formatter = {
   },
 
   numbers: {
-    format(value: number, isFloat?: boolean): string {
-      return __formatter.localizeNumbers(value, isFloat ?? false)
+    format(value: number | string, params?: {type?: 'decimal' | 'basic', maximumFractionDigits?: number}): string {
+      return __formatter.localizeNumbers(typeof value === 'string' ? parseFloat(value) : value, params?.type ?? 'basic', params?.maximumFractionDigits ?? 20)
     }
   },
 

@@ -99,18 +99,21 @@ void Formatter::installJSIBindings() {
          if (!args[1].isNull() && !args[1].isUndefined() && args[1].isString()) {
              rawSymbol = args[1].asString(runtime).utf8(runtime);
          }
-     auto symbol = jni::make_jstring(rawSymbol);
+       auto symbol = jni::make_jstring(rawSymbol);
        auto method = javaPart_->getClass()->getMethod<JString(double, jni::local_ref<JString>)>("formatCurrency");
        auto response = method(javaPart_.get(), rawValue, symbol);
        return jsi::String::createFromUtf8(runtime, response->toStdString());
     });
 
-    auto localizeNumbers = JSI_HOST_FUNCTION("formatCurrency", 2) {
-        auto rawValue = args[0].asNumber();
-        auto rawIsFloat = args[1].getBool();
+    auto localizeNumbers = JSI_HOST_FUNCTION("localizeNumbers", 3) {
+          auto rawValue = args[0].asNumber();
+          auto rawType = args[1].asString(runtime).utf8(runtime);
+          auto rawDigits = args[2].asNumber();
 
-         auto method = javaPart_->getClass()->getMethod<JString(double, bool)>("formatCurrency");
-         auto response = method(javaPart_.get(), rawValue, rawIsFloat);
+          auto symbol = jni::make_jstring(rawType);
+
+         auto method = javaPart_->getClass()->getMethod<JString(double, jni::local_ref<JString>, double)>("localizeNumbers");
+         auto response = method(javaPart_.get(), rawValue, symbol, rawDigits);
          return jsi::String::createFromUtf8(runtime, response->toStdString());
     });
 

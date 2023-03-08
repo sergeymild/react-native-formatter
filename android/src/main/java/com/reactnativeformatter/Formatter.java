@@ -1,6 +1,8 @@
 package com.reactnativeformatter;
 
 import android.content.Context;
+import android.icu.number.LocalizedNumberFormatter;
+import android.icu.number.NumberFormatter;
 import android.icu.text.DecimalFormat;
 import android.icu.text.DecimalFormatSymbols;
 import android.icu.text.NumberFormat;
@@ -228,7 +230,8 @@ public class Formatter {
   }
 
   @DoNotStrip
-  public String formatCurrency(double value, boolean isFloat) {
+  public String localizeNumbers(double value, String type, double maximumFractionDigits) {
+    numberFormatter.setMaximumFractionDigits((int) maximumFractionDigits);
     return numberFormatter.format(value);
   }
 }

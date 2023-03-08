@@ -51,8 +51,17 @@
     return [formatter stringFromNumber:[[NSNumber alloc] initWithDouble:value]];
 }
 
--(NSString*)localizeNumbers:(double)value isFloat:(bool)isFloat {
-    [numbersFormatter setNumberStyle: isFloat ? NSNumberFormatterDecimalStyle : NSNumberFormatterNoStyle];
+-(NSString*)localizeNumbers:(double)value
+                       type:(NSString*)type
+      maximumFractionDigits:(NSUInteger)maximumFractionDigits {
+    
+    NSNumberFormatterStyle style = NSNumberFormatterNoStyle;
+    if ([type isEqual: @"decimal"]) {
+        style = NSNumberFormatterDecimalStyle;
+    }
+    
+    [numbersFormatter setNumberStyle: style];
+    [numbersFormatter setMaximumFractionDigits:maximumFractionDigits];
     return [numbersFormatter stringFromNumber:[[NSNumber alloc] initWithDouble:value]];
 }
 @end

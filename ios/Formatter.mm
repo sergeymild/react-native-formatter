@@ -124,6 +124,16 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
         return [self toJSIString:formatted];
     });
 
+    auto parseFormat = JSI_HOST_FUNCTION("parseFormat", 2) {
+        auto rawDate = args[0].asString(runtime).utf8(runtime);
+        auto rawFormat = args[1].asString(runtime).utf8(runtime);
+        auto format = [[NSString alloc] initWithUTF8String:rawFormat.c_str()];
+        auto date = [[NSString alloc] initWithUTF8String:rawDate.c_str()];
+        auto formatted = [dateFormatter parseFormat:date pattern:format];
+        if (formatted == -1) { return -1; }
+        return formatted * 1000.0;
+    });
+
     auto is24HourClock = JSI_HOST_FUNCTION("is24HourClock", 0) {
         return jsi::Value([dateFormatter is24HourClock]);
     });
@@ -171,6 +181,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install) {
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
     exportModule.setProperty(*_runtime, "formatElapsedTime", std::move(formatElapsedTime));
     exportModule.setProperty(*_runtime, "format", std::move(format));
+    exportModule.setProperty(*_runtime, "parseFormat", std::move(parseFormat));
     exportModule.setProperty(*_runtime, "simpleFormat", std::move(simpleFormat));
     exportModule.setProperty(*_runtime, "timeAgo", std::move(timeAgo));
     exportModule.setProperty(*_runtime, "fromNow", std::move(timeAgo));

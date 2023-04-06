@@ -1,21 +1,21 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from "react-native";
 
 const LINKING_ERROR =
   `The package 'react-native-formatter' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
+  Platform.select({ ios: "- You have run 'pod install'\n", default: "" }) +
+  "- You rebuilt the app after installing the package\n" +
+  "- You are not using Expo managed workflow\n";
 
 const Formatter = NativeModules.Formatter
   ? NativeModules.Formatter
   : new Proxy(
-    {},
-    {
-      get() {
-        throw new Error(LINKING_ERROR);
-      },
-    }
-  );
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
 
 Formatter.install();
 
@@ -36,20 +36,26 @@ declare global {
     hoursMinutes(date: number): string;
     formatElapsedTime(date: number): string;
     format(date: number, format: string): string;
+    // returns timestamp in milliseconds of -1
+    parseFormat(date: string | string, format: string): number;
     simpleFormat(date: number): string;
     is24HourClock(): boolean;
-    timeAgo(date: number, style: 'full' | 'spellOut'): string;
+    timeAgo(date: number, style: "full" | "spellOut"): string;
     fromNow(date: number): string;
     setLocale(locale: string): boolean;
     getLocale(): Locale;
     availableLocales(): Locale[];
     formatCurrency(value: number, symbol?: string): string;
-    localizeNumbers(value: number, type: 'decimal' | 'basic', maximumFractionDigits: number): string;
+    localizeNumbers(
+      value: number,
+      type: "decimal" | "basic",
+      maximumFractionDigits: number
+    ): string;
   };
 }
 
 function toMills(date: number | string): number {
-  if (typeof date === 'number') return date;
+  if (typeof date === "number") return date;
   if (!isIsoDate(date)) {
     throw new Error(`[dateIsNotISO8601Standard] ${date}`);
   }
@@ -79,14 +85,18 @@ export const formatter = {
       return __formatter.format(toMills(date), format);
     },
 
+    parseFormat(date: string | string, format: string): number {
+      return __formatter.parseFormat(date, format);
+    },
+
     // full = 0, // "2 months ago"
     // spellOut, // "two months ago"
-    timeAgo(date: number | string, style?: 'full' | 'spellOut'): string {
-      return __formatter.timeAgo(toMills(date), style ?? 'full');
+    timeAgo(date: number | string, style?: "full" | "spellOut"): string {
+      return __formatter.timeAgo(toMills(date), style ?? "full");
     },
 
     fromNow(date: number | string): string {
-      return __formatter.timeAgo(toMills(date), 'full');
+      return __formatter.timeAgo(toMills(date), "full");
     },
 
     simpleFormat(date: number | string): string {
@@ -97,8 +107,8 @@ export const formatter = {
       left = toMills(left);
       right = toMills(right);
       return (
-        __formatter.format(left, 'MM.dd.yyyy') ===
-        __formatter.format(right, 'MM.dd.yyyy')
+        __formatter.format(left, "MM.dd.yyyy") ===
+        __formatter.format(right, "MM.dd.yyyy")
       );
     },
 
@@ -126,14 +136,21 @@ export const formatter = {
   },
 
   numbers: {
-    format(value: number | string, params?: {type?: 'decimal' | 'basic', maximumFractionDigits?: number}): string {
-      return __formatter.localizeNumbers(typeof value === 'string' ? parseFloat(value) : value, params?.type ?? 'basic', params?.maximumFractionDigits ?? 20)
-    }
+    format(
+      value: number | string,
+      params?: { type?: "decimal" | "basic"; maximumFractionDigits?: number }
+    ): string {
+      return __formatter.localizeNumbers(
+        typeof value === "string" ? parseFloat(value) : value,
+        params?.type ?? "basic",
+        params?.maximumFractionDigits ?? 20
+      );
+    },
   },
 
   currency: {
     format(value: number, symbol?: string): string {
-      return __formatter.formatCurrency(value, symbol)
-    }
-  }
-}
+      return __formatter.formatCurrency(value, symbol);
+    },
+  },
+};

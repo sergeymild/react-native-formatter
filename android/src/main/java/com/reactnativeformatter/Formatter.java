@@ -152,6 +152,19 @@ public class Formatter {
   }
 
   @DoNotStrip
+  public double parseFormat(String rawDate, String format) {
+    SimpleDateFormat format1 = new SimpleDateFormat(format, Locale.getDefault());
+    format1.setTimeZone(TimeZone.getTimeZone("UTC"));
+    try {
+      Date parse = format1.parse(rawDate);
+      if (parse == null) return -1;
+      return parse.getTime() * 1.0;
+    } catch (ParseException e) {
+      return -1;
+    }
+  }
+
+  @DoNotStrip
   public String simpleFormat(double rawDate) {
     Date date = new Date((long) rawDate);
     return SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, currentLocale).format(date);

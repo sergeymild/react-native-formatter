@@ -3,7 +3,7 @@ Format date on Native Side
 ## Installation
 
 ```sh
-"react-native-formatter": "sergeymild/react-native-formatter#0.71.5"
+"react-native-formatter": "sergeymild/react-native-formatter#0.71.6"
 ```
 
 ## Usage
@@ -35,6 +35,8 @@ formatter.date.hoursMinutes(Date.now())
 // just format date with passed pattern
 // accepts date in mills or string `YYYY-MM-DDTHH:mm:ss.sssZ` format
 formatter.date.format(Date.now(), 'dd MMM yyyy HH:mm')
+// parse date and returns either timestamp in milliseconds or -1 if date is not valid
+formatter.date.parseFormat("31/12/1991", 'dd/MM/yyyy')
 //Short will return "12/13/52"
 formatter.date.simpleFormat(Date.now())
 // formatting of a relative date or time, such as "in 2 weeks", "in 3 months"

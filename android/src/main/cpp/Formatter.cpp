@@ -69,6 +69,18 @@ void Formatter::installJSIBindings() {
         return jsi::String::createFromUtf8(runtime, response->toStdString());
     });
 
+    auto parseFormat = JSI_HOST_FUNCTION("parseFormat", 2) {
+        auto rawDate = args[0].asString(runtime).utf8(runtime);
+        auto rawFormat = args[1].asString(runtime).utf8(runtime);
+
+        auto localFormat = jni::make_jstring(rawFormat);
+        auto localDate = jni::make_jstring(rawDate);
+        auto method = javaPart_->getClass()->getMethod<double(jni::local_ref<JString>, jni::local_ref<JString>)>("parseFormat");
+        auto response = method(javaPart_.get(), localDate, localFormat);
+        if (response == -1) return -1;
+        return response;
+    });
+
     auto simpleFormat = JSI_HOST_FUNCTION("simpleFormat", 1) {
         auto rawDate = args[0].asNumber();
         auto method = javaPart_->getClass()->getMethod<JString(double)>("simpleFormat");
@@ -150,6 +162,7 @@ void Formatter::installJSIBindings() {
     exportModule.setProperty(*_runtime, "hoursMinutes", std::move(hoursMinutes));
     exportModule.setProperty(*_runtime, "formatElapsedTime", std::move(formatElapsedTime));
     exportModule.setProperty(*_runtime, "format", std::move(format));
+    exportModule.setProperty(*_runtime, "parseFormat", std::move(parseFormat));
     exportModule.setProperty(*_runtime, "simpleFormat", std::move(simpleFormat));
     exportModule.setProperty(*_runtime, "timeAgo", std::move(timeAgo));
     exportModule.setProperty(*_runtime, "fromNow", std::move(fromNow));

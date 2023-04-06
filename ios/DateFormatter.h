@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString*)chatLikeFormat:(double)rawDate;
 -(NSString*)hoursMinutes:(double)rawDate;
 -(NSString*)format:(double)rawDate pattern:(NSString*)pattern;
+-(double)parseFormat:(NSString*)rawDate pattern:(NSString*)pattern;
 -(bool)is24HourClock;
 -(NSString*)timeAgo:(double)rawDate style:(NSString*)style;
 -(NSString*)simpleFormat:(double)rawDate;

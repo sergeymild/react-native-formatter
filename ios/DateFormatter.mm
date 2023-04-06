@@ -103,6 +103,16 @@ int is24Hours_ = -1;
     return [formatter stringFromDate:date];
 }
 
+-(double)parseFormat:(NSString*)rawDate pattern:(NSString*)pattern {
+    auto formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:pattern];
+    auto timezone = [[NSTimeZone alloc] initWithName:@"UTC"];
+    [formatter setTimeZone:timezone];
+    NSDate *date = [formatter dateFromString:rawDate];
+    if (date == NULL) return -1;
+    return date.timeIntervalSince1970;
+}
+
 -(NSString*)simpleFormat:(double)rawDate {
     auto date = [[NSDate alloc] initWithTimeIntervalSince1970:rawDate];
     return [[self shortDateFormatter] stringFromDate:date];

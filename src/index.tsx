@@ -37,7 +37,7 @@ declare global {
     formatElapsedTime(date: number): string;
     format(date: number, format: string): string;
     // returns timestamp in milliseconds of -1
-    parseFormat(date: string | string, format: string): number;
+    parseFormat(date: string, format: string): number;
     simpleFormat(date: number): string;
     is24HourClock(): boolean;
     timeAgo(date: number, style: "full" | "spellOut"): string;
@@ -85,7 +85,7 @@ export const formatter = {
       return __formatter.format(toMills(date), format);
     },
 
-    parseFormat(date: string | string, format: string): number {
+    parseFormat(date: string, format: string): number {
       return __formatter.parseFormat(date, format);
     },
 
